@@ -1,0 +1,1605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sohaila & Mostafa — Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brown:#450F09;
+  --cream:#FAF0EB;
+  --green:#5B6B43;
+  --olive:#879061;
+  --sage:#5E7261;
+  --goldbrown:#614124;
+  --warmgold:#693E0E;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--cream);color:var(--brown)}
+body{font-family:'Cormorant Garamond',serif}
+#app{position:fixed;inset:0;overflow:hidden}
+.page{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  opacity:0;pointer-events:none;
+  transform:translateX(8%);
+  transition:opacity .55s ease,transform .7s cubic-bezier(.22,.8,.2,1);
+  background:var(--cream);
+}
+.page.active{opacity:1;pointer-events:auto;transform:translateX(0)}
+.page.prev{transform:translateX(-8%)}
+.tap-zone{position:absolute;inset:0;cursor:pointer}
+.hint{
+  position:absolute;bottom:max(22px,env(safe-area-inset-bottom));left:50%;
+  transform:translateX(-50%);
+  font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--goldbrown);opacity:.72;
+  z-index:10;white-space:nowrap;pointer-events:none;
+}
+.hint span{display:inline-block;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(4px)}}
+
+.cover{
+  background:var(--cream);
+}
+.cover-card{
+  width:min(86vw,560px);height:min(78vh,760px);
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;border:1px solid rgba(97,65,36,.38);
+  box-shadow:0 18px 60px rgba(69,15,9,.10);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(135,144,97,.20),transparent 18%),
+    radial-gradient(circle at 90% 88%,rgba(91,107,67,.16),transparent 20%),
+    var(--cream);
+  overflow:hidden;
+}
+.cover-card:before,.cover-card:after{
+  content:"";position:absolute;width:120px;height:120px;border:1px solid rgba(105,62,14,.45);
+}
+.cover-card:before{left:-62px;top:-62px;border-radius:0 0 100% 0}
+.cover-card:after{right:-62px;bottom:-62px;border-radius:100% 0 0 0}
+.monogram{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(90px,18vw,150px);
+  line-height:.75;font-weight:500;color:var(--warmgold);letter-spacing:-.09em;
+}
+.script{font-family:Allura,cursive}
+.cover-kicker{margin-top:42px;font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--goldbrown)}
+.cover-names{font-size:clamp(52px,10vw,78px);color:var(--goldbrown);line-height:.9;margin:18px 0 22px}
+.cover-date{font-family:Montserrat,sans-serif;letter-spacing:.16em;font-size:12px;color:var(--brown)}
+.cover-flourish{font-size:32px;color:var(--green);margin:26px 0 0}
+
+.spread{
+  background:#fff;
+}
+.spread-wrap{
+  width:min(94vw,1180px);
+  max-height:92vh;
+  position:relative;
+  box-shadow:0 22px 70px rgba(69,15,9,.18);
+}
+.spread-wrap img{display:block;width:100%;height:auto;max-height:92vh;object-fit:contain}
+.spread-link{position:absolute;left:0;top:0;width:29%;height:100%;cursor:pointer}
+.spread-center{position:absolute;left:29%;top:0;width:42%;height:100%;cursor:pointer}
+.spread-right{position:absolute;right:0;top:0;width:29%;height:100%;cursor:pointer}
+
+.info{
+  background:var(--cream);
+}
+.info-box{
+  width:min(88vw,820px);text-align:center;
+  padding:40px 24px;
+}
+.eyebrow{font-family:Montserrat,sans-serif;letter-spacing:.22em;text-transform:uppercase;font-size:10px;color:var(--green)}
+.info h1{font-size:clamp(58px,10vw,100px);font-weight:400;color:var(--goldbrown);margin:12px 0}
+.info p{font-size:clamp(20px,3vw,28px);line-height:1.25;margin:12px auto;max-width:650px;color:var(--goldbrown)}
+.quote{font-size:clamp(22px,3vw,30px)!important;font-style:italic;max-width:700px!important}
+.names{font-family:Allura,cursive;font-size:clamp(65px,11vw,105px)!important;line-height:.85}
+.rule{height:1px;width:110px;background:var(--warmgold);margin:25px auto}
+.details{font-family:Montserrat,sans-serif;letter-spacing:.09em;text-transform:uppercase;font-size:12px!important;line-height:1.7!important}
+.arabic{font-family:serif;direction:rtl;font-size:18px!important;color:var(--green)!important}
+
+.photo{background:var(--brown)}
+.photo-frame{
+  width:min(84vw,700px);height:min(84vh,850px);
+  border:1px solid rgba(250,240,235,.55);padding:10px;
+}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9)}
+.photo-caption{position:absolute;bottom:35px;left:0;right:0;text-align:center;color:var(--cream);font-family:Allura,cursive;font-size:44px}
+
+.countdown{
+  background:var(--green);
+  color:var(--cream);
+}
+.count-box{text-align:center;width:min(90vw,850px)}
+.count-box .eyebrow{color:#dfe4d0}
+.count-title{font-family:Allura,cursive;font-size:clamp(75px,13vw,130px);line-height:.8;margin:25px 0;color:var(--cream)}
+.date-large{font-family:Montserrat,sans-serif;letter-spacing:.2em;font-size:13px}
+.timer{display:flex;justify-content:center;gap:clamp(10px,4vw,40px);margin:45px 0}
+.time{min-width:70px}.num{font-family:'Cormorant Garamond';font-size:clamp(46px,7vw,75px);font-weight:500}.lbl{font-family:Montserrat;font-size:8px;letter-spacing:.18em;text-transform:uppercase;opacity:.75}
+.flower-dot{font-size:38px;color:#d7dfc7}
+
+.location{
+  background:var(--cream);
+}
+.location-box{text-align:center;width:min(90vw,780px)}
+.location-title{font-family:Allura,cursive;font-size:clamp(70px,12vw,120px);color:var(--goldbrown);margin:0}
+.location-box h2{font-family:Montserrat,sans-serif;font-size:14px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;color:var(--brown)}
+.location-box p{font-size:24px;color:var(--goldbrown);margin:10px 0 24px}
+.qr{width:180px;height:180px;object-fit:contain;background:#fff;padding:8px;margin:8px auto 18px;display:block}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:190px;padding:13px 20px;border:1px solid var(--goldbrown);
+  color:var(--goldbrown);text-decoration:none;font-family:Montserrat,sans-serif;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:transparent;
+  position:relative;z-index:20;
+}
+.note{font-family:Montserrat,sans-serif;font-size:9px!important;letter-spacing:.12em;text-transform:uppercase;color:var(--green)!important}
+
+.final{background:var(--cream)}
+.final-inner{text-align:center}
+.final .big{font-family:Allura,cursive;font-size:clamp(88px,15vw,155px);line-height:.72;color:var(--goldbrown)}
+.final .small{font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--green);margin-top:30px}
+.heart{font-size:58px;color:var(--goldbrown);margin-top:22px}
+
+.nav{
+  position:fixed;z-index:50;right:18px;top:18px;
+  display:flex;gap:7px;align-items:center;
+  font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:.12em;
+  color:var(--goldbrown);opacity:.65;
+}
+.nav button{
+  border:1px solid currentColor;background:transparent;color:inherit;
+  width:30px;height:30px;border-radius:50%;cursor:pointer;
+}
+.music{
+  position:fixed;z-index:60;left:18px;top:18px;
+  border:1px solid rgba(69,15,9,.35);background:rgba(250,240,235,.8);
+  color:var(--goldbrown);border-radius:50%;width:34px;height:34px;cursor:pointer;
+}
+@media(max-width:700px){
+  .spread-wrap{width:100vw;max-height:100vh;box-shadow:none}
+  .spread-wrap img{width:100vw;height:100vh;object-fit:contain}
+  .cover-card{width:88vw;height:82vh}
+  .timer{gap:9px}.time{min-width:58px}
+  .photo-frame{width:88vw;height:76vh}
+}
+
+.cover-logo{
+  width:min(62vw,330px);
+  max-height:34vh;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 20px;
+}
+.cover-question{
+  font-family:'Cormorant Garamond',serif;
+  color:var(--goldbrown);
+  font-size:clamp(25px,4.7vw,42px);
+  line-height:1.2;
+  max-width:520px;
+  margin:12px auto 30px;
+  padding:0 16px;
+}
+.start-btn{
+  position:relative;
+  z-index:12;
+  border:1px solid var(--goldbrown);
+  background:transparent;
+  color:var(--goldbrown);
+  font-family:Montserrat,sans-serif;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:14px 22px;
+  cursor:pointer;
+}
+.cinderella-carriage{
+  position:fixed;
+  z-index:90;
+  left:-160px;
+  bottom:8vh;
+  width:120px;
+  height:70px;
+  pointer-events:none;
+  opacity:0;
+}
+.cinderella-carriage svg{width:100%;height:100%;overflow:visible}
+.cinderella-carriage.ride{
+  opacity:1;
+  animation:carriageRide .95s cubic-bezier(.2,.75,.25,1) forwards;
+}
+@keyframes carriageRide{
+  0%{transform:translateX(0) scale(.92);opacity:0}
+  12%{opacity:1}
+  82%{opacity:1}
+  100%{transform:translateX(calc(100vw + 320px)) scale(1);opacity:0}
+}
+.wheel{transform-box:fill-box;transform-origin:center;animation:wheelSpin .42s linear infinite}
+@keyframes wheelSpin{to{transform:rotate(360deg)}}
+
+
+/* Royal opening page */
+.cover.royal-cover{
+  background:#FAF0EB;
+}
+.royal-cover-art{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#FAF0EB;
+  z-index:1;
+}
+.royal-glow{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(250,240,235,.02), transparent 36%),
+    radial-gradient(circle at 50% 75%, rgba(105,62,14,.08), transparent 26%);
+  animation:royalBreath 4.8s ease-in-out infinite;
+}
+@keyframes royalBreath{
+  0%,100%{opacity:.25}
+  50%{opacity:.8}
+}
+.royal-start-hit{
+  position:absolute;
+  left:28%;
+  right:28%;
+  bottom:5.5%;
+  height:13%;
+  z-index:5;
+  cursor:pointer;
+  border:0;
+  background:transparent;
+}
+.royal-start-hit:focus-visible{
+  outline:1px solid #693E0E;
+  outline-offset:2px;
+}
+
+/* Slower magical Cinderella carriage */
+.cinderella-carriage{
+  width:230px !important;
+  height:135px !important;
+  bottom:7vh !important;
+  filter:drop-shadow(0 8px 14px rgba(69,15,9,.18));
+}
+.cinderella-carriage.ride{
+  animation:carriageRideRoyal 3.15s cubic-bezier(.16,.72,.18,1) forwards !important;
+}
+@keyframes carriageRideRoyal{
+  0%{transform:translateX(0) translateY(0) scale(.88);opacity:0}
+  8%{opacity:1}
+  22%{transform:translateX(22vw) translateY(-5px) scale(.94);opacity:1}
+  50%{transform:translateX(52vw) translateY(2px) scale(1);opacity:1}
+  78%{transform:translateX(82vw) translateY(-6px) scale(1.02);opacity:1}
+  92%{opacity:1}
+  100%{transform:translateX(calc(100vw + 320px)) translateY(0) scale(1.02);opacity:0}
+}
+.wheel{
+  animation:wheelSpinRoyal 1.05s linear infinite !important;
+}
+@keyframes wheelSpinRoyal{to{transform:rotate(360deg)}}
+
+/* Magical sparkles following the carriage */
+.magic-sparkles{
+  position:fixed;
+  z-index:89;
+  left:-120px;
+  bottom:10vh;
+  width:180px;
+  height:85px;
+  pointer-events:none;
+  opacity:0;
+}
+.magic-sparkles.ride{
+  animation:sparkleRide 3.15s cubic-bezier(.16,.72,.18,1) forwards;
+}
+@keyframes sparkleRide{
+  0%{transform:translateX(0);opacity:0}
+  7%{opacity:.95}
+  90%{opacity:.9}
+  100%{transform:translateX(calc(100vw + 320px));opacity:0}
+}
+.magic-sparkles i{
+  position:absolute;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:#879061;
+  box-shadow:0 0 10px rgba(135,144,97,.85);
+  animation:twinkle 1.25s ease-in-out infinite;
+}
+.magic-sparkles i:nth-child(2){left:28px;top:12px;background:#693E0E;animation-delay:.18s}
+.magic-sparkles i:nth-child(3){left:54px;top:48px;background:#FAF0EB;border:1px solid #614124;animation-delay:.35s}
+.magic-sparkles i:nth-child(4){left:82px;top:22px;background:#5E7261;animation-delay:.6s}
+.magic-sparkles i:nth-child(5){left:108px;top:62px;background:#879061;animation-delay:.8s}
+.magic-sparkles i:nth-child(6){left:132px;top:34px;background:#693E0E;animation-delay:1s}
+@keyframes twinkle{
+  0%,100%{transform:scale(.45);opacity:.2}
+  50%{transform:scale(1.55);opacity:1}
+}
+
+
+/* ===== Church-door opening scene ===== */
+.cover.church-scene{
+  background:
+    radial-gradient(circle at 50% 28%, rgba(250,240,235,.95), rgba(250,240,235,.78) 36%, rgba(97,65,36,.12) 100%),
+    var(--cream);
+  perspective:1800px;
+  overflow:hidden;
+}
+
+.church-arch{
+  position:absolute;
+  inset:3.5vh 5vw 2.5vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  z-index:1;
+}
+.church-arch:before{
+  content:"";
+  position:absolute;
+  width:min(78vw,720px);
+  height:min(88vh,900px);
+  border:3px solid rgba(105,62,14,.72);
+  border-bottom:0;
+  border-radius:50% 50% 0 0 / 25% 25% 0 0;
+  box-shadow:
+    0 0 0 9px rgba(250,240,235,.62),
+    0 0 0 11px rgba(135,144,97,.28),
+    inset 0 0 45px rgba(97,65,36,.07);
+}
+
+.church-cross{
+  position:absolute;
+  top:7vh;
+  left:50%;
+  width:52px;
+  height:72px;
+  transform:translateX(-50%);
+  z-index:6;
+  opacity:.85;
+}
+.church-cross:before,.church-cross:after{
+  content:"";
+  position:absolute;
+  background:var(--goldbrown);
+  border-radius:1px;
+}
+.church-cross:before{width:7px;height:58px;left:22px;top:8px}
+.church-cross:after{width:42px;height:7px;left:4px;top:24px}
+
+.door-stage{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(74vw,650px);
+  height:min(76vh,760px);
+  transform:translate(-50%,-43%);
+  z-index:3;
+  display:flex;
+  overflow:visible;
+}
+
+.door{
+  width:50%;
+  height:100%;
+  position:relative;
+  background:
+    linear-gradient(90deg, rgba(69,15,9,.97), rgba(97,65,36,.98)),
+    var(--brown);
+  border:2px solid #693E0E;
+  box-shadow:inset 0 0 0 2px rgba(250,240,235,.08), 0 18px 45px rgba(69,15,9,.22);
+  transform-style:preserve-3d;
+  transition:transform 1.85s cubic-bezier(.18,.7,.18,1);
+}
+.door.left{
+  transform-origin:left center;
+  border-radius:48% 0 0 0 / 15% 0 0 0;
+}
+.door.right{
+  transform-origin:right center;
+  border-radius:0 48% 0 0 / 0 15% 0 0;
+}
+
+.door:before{
+  content:"";
+  position:absolute;
+  inset:7%;
+  border:1px solid rgba(250,240,235,.28);
+  box-shadow:
+    inset 0 0 0 7px rgba(105,62,14,.22),
+    inset 0 0 28px rgba(0,0,0,.12);
+}
+.door:after{
+  content:"";
+  position:absolute;
+  width:9px;height:9px;border-radius:50%;
+  top:54%;
+  background:#c9a96b;
+  box-shadow:0 0 0 3px rgba(250,240,235,.08);
+}
+.door.left:after{right:15px}
+.door.right:after{left:15px}
+
+.church-scene.opening .door.left{transform:rotateY(-78deg)}
+.church-scene.opening .door.right{transform:rotateY(78deg)}
+
+.door-center-content{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-46%);
+  width:min(68vw,520px);
+  text-align:center;
+  color:var(--cream);
+  pointer-events:none;
+  transition:opacity .55s ease, transform .55s ease;
+}
+.church-scene.opening .door-center-content{
+  opacity:0;
+  transform:translate(-50%,-42%) scale(.98);
+}
+
+.door-monogram{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(86px,16vw,148px);
+  line-height:.74;
+  color:#FAF0EB;
+  letter-spacing:-.08em;
+  text-shadow:0 3px 20px rgba(0,0,0,.18);
+}
+.door-question{
+  margin:32px auto 26px;
+  max-width:480px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,4.3vw,40px);
+  line-height:1.16;
+  color:#FAF0EB;
+}
+.door-start{
+  pointer-events:auto;
+  border:1px solid rgba(250,240,235,.8);
+  background:rgba(250,240,235,.04);
+  color:#FAF0EB;
+  padding:13px 23px;
+  font-family:Montserrat,sans-serif;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+  position:relative;
+  z-index:8;
+}
+.door-start:hover{background:rgba(250,240,235,.09)}
+
+.church-light{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(34vw,340px);
+  height:min(58vh,550px);
+  transform:translate(-50%,-37%);
+  background:radial-gradient(ellipse at center, rgba(250,240,235,.95) 0%, rgba(250,240,235,.5) 45%, transparent 72%);
+  opacity:0;
+  z-index:2;
+  pointer-events:none;
+  filter:blur(2px);
+  transition:opacity 1.2s ease .25s;
+}
+.church-scene.opening .church-light{opacity:1}
+
+/* Carriage begins outside and drives "through" the open doors */
+.church-scene .cinderella-carriage{
+  bottom:10vh !important;
+}
+.church-scene.opening ~ .cinderella-carriage,
+.cinderella-carriage.door-ride{
+  opacity:1;
+  animation:carriageThroughDoor 3.6s cubic-bezier(.18,.72,.2,1) forwards !important;
+}
+@keyframes carriageThroughDoor{
+  0%{transform:translateX(0) translateY(0) scale(.82);opacity:0}
+  7%{opacity:1}
+  35%{transform:translateX(34vw) translateY(-1vh) scale(.94);opacity:1}
+  60%{transform:translateX(54vw) translateY(-5vh) scale(.78);opacity:1}
+  78%{transform:translateX(63vw) translateY(-12vh) scale(.48);opacity:.96}
+  100%{transform:translateX(69vw) translateY(-20vh) scale(.22);opacity:0}
+}
+
+.magic-sparkles.door-ride{
+  animation:sparkleDoorRide 3.6s cubic-bezier(.18,.72,.2,1) forwards !important;
+}
+@keyframes sparkleDoorRide{
+  0%{transform:translateX(0) translateY(0);opacity:0}
+  10%{opacity:.9}
+  55%{transform:translateX(46vw) translateY(-4vh);opacity:.95}
+  100%{transform:translateX(66vw) translateY(-17vh);opacity:0}
+}
+
+@media(max-width:700px){
+  .door-stage{
+    width:86vw;
+    height:69vh;
+    transform:translate(-50%,-40%);
+  }
+  .church-arch:before{
+    width:90vw;
+    height:84vh;
+  }
+  .door-question{
+    font-size:clamp(24px,7vw,34px);
+    padding:0 12px;
+  }
+  .door-monogram{
+    font-size:clamp(84px,27vw,128px);
+  }
+}
+
+
+/* =========================================================
+   FINAL FIRST PAGE — MOBILE-FIRST MOTION GRAPHICS
+   Only page 0 + carriage behavior are changed.
+   ========================================================= */
+
+.intro-scene{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:#1e120d;
+  perspective:1800px;
+  transform-style:preserve-3d;
+}
+
+.intro-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover;
+  transition:opacity 1.05s ease, transform 2.45s cubic-bezier(.16,.74,.18,1);
+  will-change:opacity,transform;
+}
+
+.intro-open-photo{
+  background-image:url('door-open-new.webp');
+  opacity:1;
+  transform:scale(1.015);
+  z-index:1;
+}
+
+.intro-closed-photo{
+  background-image:url('mosque-open.webp');
+  opacity:1;
+  transform:scale(1.01);
+  z-index:2;
+}
+
+.intro-door-leaf{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  z-index:4;
+  pointer-events:none;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  filter:drop-shadow(0 12px 18px rgba(45,20,7,.22));
+  will-change:transform,opacity;
+}
+
+.intro-door-left{
+  transform-origin:34% 52%;
+  transition:transform 2.35s cubic-bezier(.16,.72,.18,1),opacity .9s ease 1.6s;
+}
+
+.intro-door-right{
+  transform-origin:66% 52%;
+  transition:transform 2.35s cubic-bezier(.16,.72,.18,1),opacity .9s ease 1.6s;
+}
+
+/* Stage 1: closed church + one CTA */
+.intro-start-layer{
+  position:absolute;
+  left:50%;
+  bottom:max(9vh,76px);
+  transform:translateX(-50%);
+  z-index:12;
+  transition:opacity .45s ease,transform .55s ease;
+}
+
+.intro-start-btn,
+.intro-open-btn{
+  border:1.5px solid rgba(214,176,108,.95);
+  background:rgba(250,240,235,.90);
+  color:#6d421a;
+  border-radius:999px;
+  min-width:230px;
+  padding:14px 24px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:.025em;
+  box-shadow:
+    0 10px 28px rgba(69,15,9,.18),
+    inset 0 0 0 1px rgba(255,255,255,.55);
+  backdrop-filter:blur(5px);
+  cursor:pointer;
+}
+
+.intro-start-btn span,
+.intro-open-btn span{
+  display:inline-block;
+  margin-left:9px;
+  font-size:26px;
+  vertical-align:-2px;
+}
+
+.intro-warm-glow{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:none;
+  opacity:0;
+  background:
+    radial-gradient(ellipse at 50% 46%,rgba(255,242,204,.40),transparent 35%),
+    radial-gradient(ellipse at 50% 72%,rgba(255,220,150,.20),transparent 28%);
+  transition:opacity 1.2s ease .4s;
+}
+
+/* Stage 2 content appears only after the doors finish opening */
+.intro-opened-layer{
+  position:absolute;
+  left:50%;
+  top:49%;
+  transform:translate(-50%,-50%) scale(.92);
+  z-index:13;
+  width:min(80vw,430px);
+  text-align:center;
+  opacity:0;
+  pointer-events:none;
+  transition:
+    opacity .72s ease .72s,
+    transform .9s cubic-bezier(.2,.8,.2,1) .68s;
+}
+
+.intro-ad-logo{
+  display:block;
+  width:min(66vw,330px);
+  max-height:29vh;
+  object-fit:contain;
+  margin:0 auto 28px;
+  filter:drop-shadow(0 7px 17px rgba(69,15,9,.18));
+}
+
+.intro-open-btn{
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity .7s ease 1.05s,transform .7s ease 1.05s;
+}
+
+/* Opening animation */
+.intro-scene.doors-opening .intro-start-layer{
+  opacity:0;
+  transform:translateX(-50%) translateY(12px);
+  pointer-events:none;
+}
+
+.intro-scene.doors-opening .intro-closed-photo{
+  opacity:0;
+  transform:scale(1.035);
+}
+
+.intro-scene.doors-opening .intro-open-photo{
+  transform:scale(1);
+}
+
+.intro-scene.doors-opening .intro-door-left{
+  transform:
+    perspective(1300px)
+    translateX(-18vw)
+    rotateY(-68deg)
+    scale(.99);
+  opacity:.96;
+}
+
+.intro-scene.doors-opening .intro-door-right{
+  transform:
+    perspective(1300px)
+    translateX(18vw)
+    rotateY(68deg)
+    scale(.99);
+  opacity:.96;
+}
+
+.intro-scene.doors-opening .intro-warm-glow{
+  opacity:1;
+}
+
+.intro-scene.doors-opened .intro-door-left,
+.intro-scene.doors-opened .intro-door-right{
+  opacity:0;
+}
+
+.intro-scene.doors-opened .intro-opened-layer{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  pointer-events:auto;
+}
+
+.intro-scene.doors-opened .intro-open-btn{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Exact uploaded Cinderella carriage — visible ONLY in transitions */
+.cinderella-carriage.photo-carriage{
+  position:fixed !important;
+  left:-360px !important;
+  bottom:6vh !important;
+  width:min(340px,38vw) !important;
+  height:auto !important;
+  z-index:100 !important;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  filter:
+    drop-shadow(0 12px 18px rgba(69,15,9,.23))
+    drop-shadow(0 0 14px rgba(255,225,159,.35));
+}
+
+.cinderella-carriage.photo-carriage img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+
+.cinderella-carriage.photo-carriage.ride{
+  visibility:visible;
+  opacity:1;
+  animation:carriageRideFinal 3s cubic-bezier(.17,.70,.18,1) forwards !important;
+}
+
+@keyframes carriageRideFinal{
+  0%{
+    transform:translateX(0) translateY(4px) scale(.88);
+    opacity:0;
+  }
+  8%{opacity:1}
+  28%{
+    transform:translateX(32vw) translateY(-5px) scale(.96);
+    opacity:1;
+  }
+  52%{
+    transform:translateX(60vw) translateY(2px) scale(1.02);
+    opacity:1;
+  }
+  78%{
+    transform:translateX(84vw) translateY(-8px) scale(.95);
+    opacity:1;
+  }
+  93%{opacity:1}
+  100%{
+    transform:translateX(calc(100vw + 470px)) translateY(-4px) scale(.88);
+    opacity:0;
+  }
+}
+
+.magic-sparkles.ride{
+  animation:sparkleRideFinal 3s cubic-bezier(.17,.70,.18,1) forwards !important;
+}
+
+@keyframes sparkleRideFinal{
+  0%{transform:translateX(0);opacity:0}
+  10%{opacity:.9}
+  88%{opacity:.9}
+  100%{transform:translateX(calc(100vw + 390px));opacity:0}
+}
+
+/* Hide navigation over the cinematic intro only; it returns automatically after page 0 */
+body:has(.intro-scene.active) .nav,
+body:has(.intro-scene.active) .music{
+  opacity:0;
+  pointer-events:none;
+}
+
+/* -------- Mobile first sizing -------- */
+@media(max-width:700px){
+  .intro-photo{
+    background-size:cover;
+    background-position:center center;
+  }
+
+  .intro-start-layer{
+    bottom:max(8vh,64px);
+    width:88vw;
+    text-align:center;
+  }
+
+  .intro-start-btn,
+  .intro-open-btn{
+    min-width:210px;
+    max-width:86vw;
+    padding:13px 22px;
+    font-size:18px;
+  }
+
+  .intro-opened-layer{
+    top:48%;
+    width:84vw;
+  }
+
+  .intro-ad-logo{
+    width:min(70vw,285px);
+    max-height:26vh;
+    margin-bottom:22px;
+  }
+
+  .cinderella-carriage.photo-carriage{
+    left:-280px !important;
+    width:min(255px,57vw) !important;
+    bottom:8vh !important;
+  }
+
+  .intro-scene.doors-opening .intro-door-left{
+    transform:perspective(950px) translateX(-23vw) rotateY(-68deg) scale(.99);
+  }
+  .intro-scene.doors-opening .intro-door-right{
+    transform:perspective(950px) translateX(23vw) rotateY(68deg) scale(.99);
+  }
+}
+
+@media(max-width:390px){
+  .intro-start-btn,
+  .intro-open-btn{
+    min-width:198px;
+    font-size:17px;
+  }
+
+  .intro-ad-logo{
+    width:68vw;
+  }
+}
+
+
+/* ===== Simple elegant page transitions — no carriage ===== */
+.cinderella-carriage,
+.magic-sparkles{
+  display:none !important;
+}
+
+body.simple-transition::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:999;
+  pointer-events:none;
+  background:rgba(250,240,235,.10);
+  animation:simpleFadeOverlay .7s ease forwards;
+}
+
+@keyframes simpleFadeOverlay{
+  0%{opacity:0}
+  45%{opacity:.22}
+  100%{opacity:0}
+}
+
+/* Keep existing page movement, but make it a touch smoother and cleaner */
+.page{
+  transition:
+    opacity .48s ease,
+    transform .58s cubic-bezier(.22,.8,.2,1) !important;
+}
+
+
+/* Auto-reveal A&D + Open the invitation as the church doors open */
+.intro-scene.doors-opening .intro-opened-layer{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  pointer-events:auto;
+}
+.intro-scene.doors-opening .intro-open-btn{
+  opacity:1;
+  transform:translateY(0);
+}
+
+
+/* ===== Responsive first-page framing ===== */
+.intro-scene{
+  background:#1e120d;
+}
+
+/* Desktop / laptop / landscape: show the entire artwork */
+@media (min-width:701px){
+  .intro-photo{
+    background-size:contain !important;
+    background-position:center center !important;
+    background-color:#1e120d;
+  }
+
+  .intro-door-leaf{
+    object-fit:contain !important;
+    object-position:center center !important;
+  }
+
+  .intro-start-layer{
+    bottom:clamp(30px,5vh,64px) !important;
+  }
+
+  .intro-opened-layer{
+    top:50% !important;
+    width:min(48vw,430px) !important;
+  }
+
+  .intro-ad-logo{
+    width:min(31vw,320px) !important;
+    max-height:28vh !important;
+  }
+
+  .intro-start-btn,
+  .intro-open-btn{
+    min-width:220px;
+    font-size:19px;
+  }
+}
+
+/* Phones: fill the portrait screen naturally */
+@media (max-width:700px){
+  .intro-photo{
+    background-size:cover !important;
+    background-position:center center !important;
+  }
+
+  .intro-door-leaf{
+    object-fit:cover !important;
+    object-position:center center !important;
+  }
+
+  .intro-opened-layer{
+    top:48% !important;
+    width:84vw !important;
+  }
+
+  .intro-ad-logo{
+    width:min(70vw,285px) !important;
+    max-height:25vh !important;
+  }
+}
+
+/* Very wide desktop screens: preserve the complete vertical composition */
+@media (min-aspect-ratio:4/3) and (min-width:900px){
+  .intro-photo{
+    background-size:contain !important;
+  }
+  .intro-door-leaf{
+    object-fit:contain !important;
+  }
+}
+
+
+/* Sohaila & Mostafa mosque entrance */
+.intro-closed-photo{filter:brightness(.72) saturate(.9);}
+.mosque-door-panel{top:5%!important;height:90%!important;width:50%!important;inset:auto!important;background-color:#4a2b18;background-image:linear-gradient(45deg,rgba(210,165,85,.14) 25%,transparent 25%,transparent 75%,rgba(210,165,85,.14) 75%),linear-gradient(-45deg,rgba(210,165,85,.10) 25%,transparent 25%,transparent 75%,rgba(210,165,85,.10) 75%);background-size:48px 48px;border:3px solid #9a6a31;box-shadow:inset 0 0 0 8px #3b2113,inset 0 0 0 10px #b88442,0 14px 30px rgba(0,0,0,.35);}
+.intro-door-left{left:0!important;border-radius:0 8px 8px 0;}
+.intro-door-right{right:0!important;border-radius:8px 0 0 8px;}
+.sm-monogram{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,14vw,132px);font-weight:500;line-height:.8;color:#704315;letter-spacing:-.08em;text-shadow:0 5px 18px rgba(255,244,216,.6);}
+.sm-monogram span{font-family:Allura,cursive;font-size:.62em;margin:0 .08em;color:#a36d2f;}
+
+
+/* ===== FIXED MOSQUE INTRO: clean two-state door animation ===== */
+.mosque-door-panel{background:none!important;border:0!important;box-shadow:none!important;}
+.intro-door-leaf{top:0!important;height:100%!important;width:50%!important;inset:auto!important;object-fit:fill!important;filter:brightness(.82) saturate(.92) drop-shadow(0 12px 18px rgba(45,20,7,.28))!important;}
+.intro-door-left{left:0!important;right:auto!important;border-radius:0!important;transform-origin:left center!important;}
+.intro-door-right{right:0!important;left:auto!important;border-radius:0!important;transform-origin:right center!important;}
+.intro-opened-layer{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important;opacity:0;pointer-events:none;}
+.intro-scene.doors-opening .intro-opened-layer,.intro-scene.doors-opened .intro-opened-layer{opacity:1;transform:none!important;pointer-events:auto;}
+.intro-open-hotspot{position:absolute;left:25%;width:50%;height:10%;top:72%;border:0;background:transparent;cursor:pointer;z-index:30;}
+.intro-scene.doors-opening .intro-door-left{transform:perspective(1300px) translateX(-46%) rotateY(-74deg)!important;opacity:.98;}
+.intro-scene.doors-opening .intro-door-right{transform:perspective(1300px) translateX(46%) rotateY(74deg)!important;opacity:.98;}
+.intro-scene.doors-opened .intro-door-left,.intro-scene.doors-opened .intro-door-right{opacity:.98!important;}
+@media(max-width:700px){.intro-open-hotspot{left:20%;width:60%;top:72%;height:11%;}}
+
+/* ===== First page mobile/desktop correction ===== */
+.intro-closed-new-photo{
+  background-image:url('mosque-closed-new.webp')!important;
+  background-size:cover!important;
+  background-position:center center!important;
+  opacity:1!important;
+  z-index:4!important;
+}
+.intro-door-leaf{z-index:5!important;}
+.intro-start-layer{z-index:20!important;}
+.intro-start-hotspot{
+  position:absolute!important;left:18%!important;right:18%!important;bottom:11%!important;top:auto!important;
+  width:64%!important;height:12%!important;min-height:64px!important;padding:0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;color:transparent!important;
+}
+.intro-scene.doors-opening .intro-closed-new-photo,.intro-scene.doors-opened .intro-closed-new-photo{opacity:0!important;transition:opacity .75s ease .15s!important;}
+@media (max-width:700px){
+ .intro-photo{background-size:cover!important;background-position:center center!important;}
+ .intro-closed-new-photo{background-size:cover!important;background-position:center center!important;}
+ .intro-start-hotspot{left:12%!important;right:12%!important;width:76%!important;bottom:9%!important;height:14%!important;}
+}
+@media (min-width:701px){
+ .intro-closed-new-photo{background-size:contain!important;background-repeat:no-repeat!important;background-color:#ead8c2!important;}
+}
+
+/* ===== Mobile first-page fit + visible Start tab ===== */
+.intro-start-layer{
+  left:50%!important; bottom:max(5.5vh,34px)!important; width:auto!important;
+  transform:translateX(-50%)!important; z-index:25!important;
+}
+.intro-start-hotspot{
+  position:relative!important; left:auto!important; right:auto!important; bottom:auto!important; top:auto!important;
+  width:auto!important; height:auto!important; min-height:0!important; min-width:240px!important;
+  padding:14px 28px!important;
+  border:1.5px solid rgba(184,132,66,.95)!important;
+  border-radius:999px!important;
+  background:rgba(250,240,235,.94)!important;
+  color:#6d421a!important;
+  box-shadow:0 10px 28px rgba(69,15,9,.18), inset 0 0 0 1px rgba(255,255,255,.6)!important;
+  font-family:'Cormorant Garamond',serif!important; font-size:20px!important; font-weight:600!important;
+  letter-spacing:.025em!important; white-space:nowrap!important; cursor:pointer!important;
+}
+.intro-start-hotspot::before{content:""; display:none;}
+@media(max-width:700px){
+  .intro-scene{background:#ead8c2!important;}
+  .intro-closed-new-photo{background-size:contain!important;background-repeat:no-repeat!important;background-position:center center!important;background-color:#ead8c2!important;}
+  .intro-open-photo{background-size:contain!important;background-repeat:no-repeat!important;background-position:center center!important;background-color:#ead8c2!important;}
+  .intro-door-leaf{object-fit:contain!important;height:100%!important;}
+  .intro-start-layer{bottom:max(4.5vh,26px)!important;}
+  .intro-start-hotspot{min-width:min(78vw,300px)!important;padding:13px 22px!important;font-size:18px!important;}
+}
+
+
+/* FINAL: make closed-door page use exactly the same frame as the opened-door page */
+.intro-closed-new-photo, .intro-open-photo{
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-color:#ead8c2!important;
+}
+@media(max-width:700px){
+  .intro-closed-new-photo, .intro-open-photo{
+    background-size:contain!important;
+    background-position:center center!important;
+  }
+}
+
+/* ===== FINAL USER ADJUSTMENTS: matched entrance framing + invitation-color couple page ===== */
+.intro-photo{
+  position:absolute!important; inset:0!important; width:100%!important; height:100%!important;
+  background-size:cover!important; background-repeat:no-repeat!important; background-position:center center!important;
+}
+.intro-closed-new-photo,.intro-open-photo{
+  inset:0!important; width:100%!important; height:100%!important;
+  background-size:cover!important; background-position:center center!important;
+}
+@media(max-width:700px){
+  .intro-closed-new-photo,.intro-open-photo{
+    background-size:cover!important; background-position:center center!important;
+  }
+}
+
+.page.photo{
+  background:
+    radial-gradient(circle at 12% 10%,rgba(135,144,97,.20),transparent 24%),
+    radial-gradient(circle at 88% 88%,rgba(91,107,67,.16),transparent 24%),
+    #FAF0EB!important;
+}
+.page.photo::before{
+  content:""; position:absolute; inset:3.5%; pointer-events:none;
+  border:1px solid rgba(94,114,97,.58); border-radius:28px;
+}
+.page.photo::after{
+  content:"S  •  M"; position:absolute; top:max(22px,4vh); left:50%; transform:translateX(-50%);
+  color:#5E7261; font-family:'Cormorant Garamond',serif; font-size:clamp(18px,3vw,28px);
+  letter-spacing:.18em; z-index:2;
+}
+.photo-frame{
+  width:min(88vw,680px)!important; height:min(76vh,820px)!important;
+  padding:10px!important; border:1px solid rgba(97,65,36,.38)!important;
+  background:rgba(255,255,255,.52)!important; border-radius:26px!important;
+  box-shadow:0 22px 65px rgba(69,15,9,.14)!important; overflow:hidden!important;
+}
+.photo-frame img{
+  width:100%!important; height:100%!important; object-fit:contain!important; object-position:center center!important;
+  filter:none!important; border-radius:18px!important; background:#FAF0EB!important;
+}
+.photo-caption{
+  bottom:max(54px,6vh)!important; color:#614124!important; font-size:clamp(34px,7vw,52px)!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.65); z-index:3;
+}
+.page.photo .hint{color:#5E7261!important;}
+@media(max-width:700px){
+  .photo-frame{width:88vw!important;height:72vh!important;margin-top:-2vh!important;}
+  .page.photo::before{inset:2.5%;border-radius:22px;}
+  .photo-caption{bottom:max(58px,7vh)!important;font-size:38px!important;}
+}
+
+
+/* ===== RESPONSIVE ENTRANCE FRAME — closed/open share one exact 940x1672 canvas ===== */
+:root{--entrance-ratio:0.5622009569;}
+.intro-scene{background:#ead8c2!important;}
+.intro-closed-new-photo,.intro-open-photo{
+  inset:auto!important;
+  left:50%!important; top:50%!important;
+  width:min(100vw,calc(100vh * var(--entrance-ratio)))!important;
+  height:min(100vh,calc(100vw / var(--entrance-ratio)))!important;
+  transform:translate(-50%,-50%)!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  background-color:transparent!important;
+}
+.intro-door-leaf{
+  inset:auto!important; top:50%!important;
+  width:min(50vw,calc(50vh * var(--entrance-ratio)))!important;
+  height:min(100vh,calc(100vw / var(--entrance-ratio)))!important;
+  object-fit:fill!important; object-position:center!important;
+}
+.intro-door-left{left:calc(50% - min(50vw,calc(50vh * var(--entrance-ratio))))!important;right:auto!important;transform:translateY(-50%)!important;}
+.intro-door-right{right:calc(50% - min(50vw,calc(50vh * var(--entrance-ratio))))!important;left:auto!important;transform:translateY(-50%)!important;}
+.intro-scene.doors-opening .intro-door-left{transform:translateY(-50%) perspective(1300px) translateX(-46%) rotateY(-74deg)!important;}
+.intro-scene.doors-opening .intro-door-right{transform:translateY(-50%) perspective(1300px) translateX(46%) rotateY(74deg)!important;}
+/* keep the CTA positioned relative to the visible artwork on all screens */
+.intro-start-layer{bottom:clamp(22px,5vh,54px)!important;}
+@media (min-width:900px){.intro-start-layer{bottom:clamp(24px,4vh,48px)!important;}}
+
+</style>
+  <link rel="preload" as="image" href="mosque-open.webp">
+</head>
+<body>
+<div id="app">
+
+
+<section class="page cover intro-scene active" data-page="0" id="introScene">
+  <div class="intro-photo intro-open-photo"></div>
+  <div class="intro-photo intro-closed-new-photo"></div>
+
+  <img class="intro-door-leaf intro-door-left" src="door-left.webp" alt="">
+  <img class="intro-door-leaf intro-door-right" src="door-right.webp" alt="">
+
+  <div class="intro-warm-glow" aria-hidden="true"></div>
+
+  <div class="intro-start-layer">
+    <button class="intro-start-btn intro-start-hotspot" id="startJourney" aria-label="Let's start the journey">Let's start the journey <span aria-hidden="true">›</span></button>
+  </div>
+
+  <div class="intro-opened-layer">
+    <img class="intro-ad-logo sm-monogram" src="sm-monogram.webp" alt="M and S monogram">
+    <button class="intro-open-btn intro-open-hotspot" id="openInvitation" aria-label="Open the Invitation">Open the Invitation <span aria-hidden="true">›</span></button>
+  </div>
+</section>
+
+
+<section class="page spread" data-page="1">
+  <div class="spread-wrap">
+    <img loading="lazy" src="invitation-final.webp" alt="Sohaila and Mostafa wedding invitation">
+    <div class="spread-link" data-next aria-label="Next page"></div>
+    <div class="spread-center" data-next aria-label="Next page"></div>
+    <div class="spread-right" data-next aria-label="Next page"></div>
+  </div>
+  <div class="hint"><span>Tap to continue</span></div>
+</section>
+
+<section class="page photo" data-page="3">
+  <div class="photo-frame"><img loading="lazy" src="sohaila-mostafa.webp" alt="Sohaila and Mostafa"></div>
+  <div class="hint" style="color:#FAF0EB"><span>Tap to continue</span></div>
+  <div class="tap-zone" data-next></div>
+</section>
+
+<section class="page countdown" data-page="4">
+  <div class="count-box">
+    <div class="eyebrow">Save the date</div>
+    <div class="count-title">Until forever</div>
+    <div class="date-large">20 · 10 · 2026</div>
+    <div class="timer">
+      <div class="time"><div class="num" id="days">0</div><div class="lbl">Days</div></div>
+      <div class="time"><div class="num" id="hours">0</div><div class="lbl">Hours</div></div>
+      <div class="time"><div class="num" id="minutes">0</div><div class="lbl">Minutes</div></div>
+      <div class="time"><div class="num" id="seconds">0</div><div class="lbl">Seconds</div></div>
+    </div>
+    <div class="flower-dot">❦</div>
+  </div>
+  <div class="hint" style="color:#FAF0EB"><span>Tap to continue</span></div>
+  <div class="tap-zone" data-next></div>
+</section>
+
+<section class="page location" data-page="5">
+  <div class="location-box">
+    <div class="location-title">Location</div>
+    <div class="rule"></div>
+    <h2>Princess Garden</h2>
+    <p>Open Air</p>
+    <img loading="lazy" class="qr" src="location-qr.png" alt="Scan for Princess Garden location">
+    <a class="btn" href="https://maps.app.goo.gl/aoXNaXf56kyxP6Lj9?g_st=iw" target="_blank" rel="noopener">Get Directions</a>
+    <p class="note">Your presence will complete our joy</p>
+  </div>
+  <div class="hint"><span>Tap to continue</span></div>
+  <div class="tap-zone" data-next></div>
+</section>
+
+<section class="page final" data-page="6">
+  <div class="final-inner">
+    <div class="big">It's with<br>great love...</div>
+    <div class="heart">♡</div>
+    <div class="small">Sohaila & Mostafa · 20 October 2026</div>
+  </div>
+  <div class="hint"><span>Tap to start again</span></div>
+  <div class="tap-zone" data-next></div>
+</section>
+
+
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹</button>
+  <span id="counter">1 / 7</span>
+  <button id="next" aria-label="Next">›</button>
+</div>
+<button class="music" id="music" title="Music">♪</button>
+<audio id="audio" loop preload="auto" playsinline src="perfect-instrumental.mp3"></audio>
+
+</div>
+<script>
+const pages=[...document.querySelectorAll('.page')];
+let index=0;
+const counter=document.getElementById('counter');
+let transitioning=false;
+function animateCarriageThen(callback){
+  if(transitioning) return;
+  transitioning=true;
+
+  document.body.classList.add('simple-transition');
+
+  setTimeout(()=>{ callback(); },260);
+
+  setTimeout(()=>{
+    document.body.classList.remove('simple-transition');
+    transitioning=false;
+  },700);
+}
+function nextWithCarriage(){ animateCarriageThen(()=>show(index+1)); }
+function show(n){
+  n=(n+pages.length)%pages.length;
+  pages.forEach((p,i)=>{
+    p.classList.toggle('active',i===n);
+    p.classList.toggle('prev',i<n);
+  });
+  index=n; counter.textContent=(n+1)+' / '+pages.length;
+}
+document.querySelectorAll('[data-next]').forEach(el=>el.addEventListener('click',nextWithCarriage));
+document.getElementById('next').onclick=nextWithCarriage;
+document.getElementById('prev').onclick=()=>show(index-1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();nextWithCarriage()}
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();show(index-1)}
+});
+let sx=0;
+document.addEventListener('touchstart',e=>sx=e.changedTouches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-sx;
+  if(Math.abs(dx)>55){ if(dx<0) nextWithCarriage(); else show(index-1); }
+},{passive:true});
+
+
+
+
+const introScene=document.getElementById('introScene');
+const startJourneyBtn=document.getElementById('startJourney');
+const openInvitationBtn=document.getElementById('openInvitation');
+
+function openChurchMotion(e){
+  if(e) e.stopPropagation();
+
+  // Start music directly from the user's first click/tap.
+  // This is the most reliable way to satisfy mobile/desktop autoplay policies.
+  const weddingAudio = document.getElementById('audio');
+  if(weddingAudio){
+    weddingAudio.volume = 0.65;
+    weddingAudio.play().then(()=>{
+      const musicBtn = document.getElementById('music');
+      if(musicBtn) musicBtn.textContent='Ⅱ';
+    }).catch((err)=>{
+      console.log('Audio playback blocked or file missing:', err);
+    });
+  }
+
+  if(transitioning) return;
+  transitioning=true;
+
+  introScene.classList.add('doors-opening');
+
+  setTimeout(()=>{
+    introScene.classList.add('doors-opened');
+    transitioning=false;
+  },2250);
+}
+
+function openInvitationMotion(e){
+  if(e) e.stopPropagation();
+  if(transitioning) return;
+  animateCarriageThen(()=>show(1));
+}
+
+startJourneyBtn.addEventListener('click',openChurchMotion);
+openInvitationBtn.addEventListener('click',openInvitationMotion);
+
+// Countdown
+const target=new Date('2026-10-20T19:30:00');
+function tick(){
+  let d=target-new Date();
+  if(d<0)d=0;
+  const s=Math.floor(d/1000);
+  document.getElementById('days').textContent=Math.floor(s/86400);
+  document.getElementById('hours').textContent=Math.floor(s%86400/3600);
+  document.getElementById('minutes').textContent=Math.floor(s%3600/60);
+  document.getElementById('seconds').textContent=s%60;
+}
+tick();setInterval(tick,1000);
+
+// Music: starts only after the visitor interacts, never auto-forces playback.
+const audio=document.getElementById('audio'), music=document.getElementById('music');
+music.onclick=(e)=>{
+  e.stopPropagation();
+  if(audio.paused){audio.play().catch(()=>{});music.textContent='Ⅱ'}
+  else{audio.pause();music.textContent='♪'}
+};
+</script>
+
+
+
+
+
+<script>
+/* PAUSE_RESUME_MUSIC_ON_VISIBILITY */
+(function(){
+  let resumeMusicWhenVisible = false;
+
+  function getWeddingAudio(){
+    return document.getElementById('audio') || document.querySelector('audio');
+  }
+
+  function pauseForBackground(){
+    const audio = getWeddingAudio();
+    if (!audio) return;
+
+    // Remember whether music was actually playing before leaving the page.
+    resumeMusicWhenVisible = !audio.paused && !audio.ended;
+
+    if (resumeMusicWhenVisible) {
+      audio.pause();
+    }
+  }
+
+  function resumeFromBackground(){
+    const audio = getWeddingAudio();
+    if (!audio || !resumeMusicWhenVisible) return;
+
+    const p = audio.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function(){});
+    }
+
+    resumeMusicWhenVisible = false;
+  }
+
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) {
+      pauseForBackground();
+    } else {
+      resumeFromBackground();
+    }
+  });
+
+  window.addEventListener('pagehide', pauseForBackground);
+
+  // Restore when browser brings the page back from back-forward cache.
+  window.addEventListener('pageshow', function(){
+    if (!document.hidden) resumeFromBackground();
+  });
+})();
+</script>
+
+
+</body>
+</html><style id="single-start-cta-fix">
+/* Closed artwork already contains the CTA. Keep only one visible CTA; this remains the click target. */
+.intro-start-layer{
+  left:50%!important;
+  bottom:8.4%!important;
+  width:58%!important;
+  height:8.5%!important;
+  transform:translateX(-50%)!important;
+  z-index:25!important;
+}
+.intro-start-hotspot{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:transparent!important;
+  font-size:0!important;
+}
+.intro-start-hotspot::before{content:none!important;display:none!important;}
+@media(max-width:700px){
+  .intro-start-layer{bottom:8.4%!important;width:66%!important;height:8.5%!important;}
+}
+</style>
+<style id="start-tab-no-blur-final">
+/* Final start CTA: crisp HTML tab, no glass/blur layer. */
+.intro-start-layer{
+  left:50%!important;
+  bottom:clamp(22px,5vh,54px)!important;
+  width:auto!important;
+  height:auto!important;
+  transform:translateX(-50%)!important;
+  z-index:25!important;
+}
+.intro-start-btn.intro-start-hotspot{
+  position:relative!important;
+  inset:auto!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:230px!important;
+  min-height:0!important;
+  padding:14px 24px!important;
+  border:1.5px solid rgba(214,176,108,.95)!important;
+  border-radius:999px!important;
+  background:#faf0eb!important;
+  color:#6d421a!important;
+  font-size:20px!important;
+  font-family:'Cormorant Garamond',serif!important;
+  font-weight:600!important;
+  letter-spacing:.025em!important;
+  box-shadow:0 10px 28px rgba(69,15,9,.18), inset 0 0 0 1px rgba(255,255,255,.55)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  filter:none!important;
+  opacity:1!important;
+  cursor:pointer!important;
+}
+.intro-start-btn.intro-start-hotspot span{
+  display:inline-block!important;
+  margin-left:9px!important;
+  font-size:26px!important;
+  color:inherit!important;
+}
+@media(max-width:700px){
+ .intro-start-layer{bottom:clamp(20px,4.5vh,42px)!important;width:auto!important;height:auto!important;}
+ .intro-start-btn.intro-start-hotspot{min-width:min(78vw,300px)!important;padding:13px 22px!important;font-size:18px!important;}
+}
+</style>
+<style id="final-cta-position-sm-clarity">
+/* Move the HTML CTA upward so it fully covers the CTA baked into the closed-door artwork. */
+.intro-start-layer{
+  bottom:11.2%!important;
+  z-index:40!important;
+}
+.intro-start-btn.intro-start-hotspot{
+  opacity:1!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  filter:none!important;
+}
+/* Keep the opened artwork and S/M treatment fully visible. */
+.intro-open-photo{
+  opacity:1!important;
+  filter:contrast(1.04) saturate(1.04)!important;
+}
+.sm-monogram,
+.intro-ad-logo{
+  opacity:1!important;
+  filter:none!important;
+}
+@media(max-width:700px){
+  .intro-start-layer{bottom:11.2%!important;}
+}
+</style>
+
+<style id="opened-monogram-cta-final">
+.intro-opened-layer{
+  left:50%!important;top:50%!important;width:min(86vw,460px)!important;height:auto!important;
+  transform:translate(-50%,-50%) scale(.94)!important;display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;z-index:30!important;pointer-events:none!important;
+}
+.intro-scene.doors-opened .intro-opened-layer{transform:translate(-50%,-50%) scale(1)!important;pointer-events:auto!important;}
+.intro-ad-logo.sm-monogram{width:min(68vw,360px)!important;max-height:34vh!important;object-fit:contain!important;margin:0 auto 24px!important;}
+.intro-open-btn.intro-open-hotspot{
+  position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:auto!important;height:auto!important;min-width:230px!important;padding:14px 24px!important;
+  border:1.5px solid rgba(214,176,108,.95)!important;background:rgba(250,240,235,.94)!important;
+  color:#6d421a!important;border-radius:999px!important;font-family:'Cormorant Garamond',serif!important;
+  font-size:20px!important;font-weight:600!important;letter-spacing:.025em!important;cursor:pointer!important;z-index:31!important;
+  box-shadow:0 10px 28px rgba(69,15,9,.18),inset 0 0 0 1px rgba(255,255,255,.55)!important;
+}
+@media(max-width:700px){
+ .intro-ad-logo.sm-monogram{width:min(74vw,330px)!important;max-height:29vh!important;margin-bottom:20px!important;}
+ .intro-open-btn.intro-open-hotspot{min-width:min(76vw,280px)!important;font-size:18px!important;padding:13px 20px!important;}
+}
+</style>
+<style id="requested-center-fade-spacing-v2">
+/* M/S stays centered; both elements bloom/fade outward from their own center. */
+.intro-opened-layer{
+  opacity:1!important;
+  transition:none!important;
+}
+.intro-ad-logo.sm-monogram{
+  width:min(57vw,300px)!important;
+  max-height:29vh!important;
+  margin:0 auto!important;
+  opacity:0!important;
+  transform:scale(.68)!important;
+  transform-origin:50% 50%!important;
+  transition:opacity .85s ease .18s, transform .95s cubic-bezier(.2,.8,.2,1) .18s!important;
+}
+.intro-open-btn.intro-open-hotspot{
+  min-width:205px!important;
+  padding:11px 20px!important;
+  font-size:17px!important;
+  margin-top:46px!important;
+  opacity:0!important;
+  transform:scale(.72)!important;
+  transform-origin:50% 50%!important;
+  transition:opacity .8s ease .48s, transform .9s cubic-bezier(.2,.8,.2,1) .48s!important;
+}
+.intro-scene.doors-opened .intro-ad-logo.sm-monogram{
+  opacity:1!important;
+  transform:scale(1)!important;
+}
+.intro-scene.doors-opened .intro-open-btn.intro-open-hotspot{
+  opacity:1!important;
+  transform:scale(1)!important;
+}
+@media(max-width:700px){
+  .intro-ad-logo.sm-monogram{width:min(62vw,275px)!important;max-height:25vh!important;}
+  .intro-open-btn.intro-open-hotspot{min-width:min(66vw,230px)!important;font-size:16px!important;padding:10px 18px!important;margin-top:42px!important;}
+}
+</style>
+<style id="show-monogram-only-after-doors-open-v3">
+/* Keep the M/S and CTA completely hidden while the doors are closed/opening. */
+.intro-scene:not(.doors-opened) .intro-ad-logo.sm-monogram,
+.intro-scene:not(.doors-opened) .intro-open-btn.intro-open-hotspot{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  transition:none!important;
+}
+/* Start their fade only after the doors have fully finished opening. */
+.intro-scene.doors-opened .intro-ad-logo.sm-monogram{
+  visibility:visible!important;
+  opacity:1!important;
+  transform:scale(1)!important;
+  transition:opacity .85s ease, transform .95s cubic-bezier(.2,.8,.2,1)!important;
+}
+.intro-scene.doors-opened .intro-open-btn.intro-open-hotspot{
+  visibility:visible!important;
+  opacity:1!important;
+  transform:scale(1)!important;
+  pointer-events:auto!important;
+  transition:opacity .8s ease .3s, transform .9s cubic-bezier(.2,.8,.2,1) .3s!important;
+}
+</style>
